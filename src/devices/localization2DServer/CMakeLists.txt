@@ -4,27 +4,32 @@
 # This software may be modified and distributed under the terms of the
 # BSD-3-Clause license. See the accompanying LICENSE file for details.
 
-yarp_prepare_plugin(localization2DClient
+yarp_prepare_plugin(localization2DServer
                     CATEGORY device
-                    TYPE Localization2DClient
-                    INCLUDE Localization2DClient.h
+                    TYPE Localization2DServer
+                    INCLUDE Localization2DServer.h
                     DEPENDS "TARGET YARP::YARP_math"
                     DEFAULT ON)
 
-if(NOT SKIP_localization2DClient)
+if(NOT SKIP_localization2DServer)
   set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-  yarp_add_plugin(yarp_localization2DClient Localization2DClient.cpp
-                                            Localization2DClient.h)
-  target_link_libraries(yarp_localization2DClient PRIVATE YARP::YARP_OS
-                                                          YARP::YARP_sig
-                                                          YARP::YARP_dev
-                                                          YARP::YARP_math)
+  yarp_add_plugin(yarp_localization2DServer Localization2DServer.h
+                                            Localization2DServer.cpp)
+
+  target_link_libraries(yarp_localization2DServer YARP::YARP_OS
+                                                  YARP::YARP_sig
+                                                  YARP::YARP_dev
+                                                  YARP::YARP_rosmsg
+                                                  YARP::YARP_math)
+
   list(APPEND YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS YARP_OS
                                                       YARP_sig
                                                       YARP_dev
+                                                      YARP_rosmsg
                                                       YARP_math)
-  yarp_install(TARGETS yarp_localization2DClient
+
+  yarp_install(TARGETS yarp_localization2DServer
                EXPORT YARP_${YARP_PLUGIN_MASTER}
                COMPONENT ${YARP_PLUGIN_MASTER}
                LIBRARY DESTINATION ${YARP_DYNAMIC_PLUGINS_INSTALL_DIR}
@@ -33,5 +38,5 @@ if(NOT SKIP_localization2DClient)
 
   set(YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS ${YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS} PARENT_SCOPE)
 
-  set_property(TARGET yarp_localization2DClient PROPERTY FOLDER "Plugins/Device")
+  set_property(TARGET yarp_localization2DServer PROPERTY FOLDER "Plugins/Device")
 endif()
