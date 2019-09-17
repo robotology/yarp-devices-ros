@@ -7,8 +7,8 @@
 yarp_prepare_plugin(test_motor
                     CATEGORY device
                     TYPE TestMotor
-                    EXTRA_CONFIG WRAPPER=controlboard
                     INCLUDE TestMotor.h
+                    EXTRA_CONFIG WRAPPER=controlboard
                     DEFAULT ON)
 
 if(NOT SKIP_test_motor)
