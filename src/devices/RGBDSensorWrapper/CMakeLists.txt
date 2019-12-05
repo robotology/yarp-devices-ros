@@ -4,33 +4,32 @@
 # This software may be modified and distributed under the terms of the
 # BSD-3-Clause license. See the accompanying LICENSE file for details.
 
-yarp_prepare_plugin(map2DServer
+yarp_prepare_plugin(RGBDSensorWrapper
                     CATEGORY device
-                    TYPE Map2DServer
-                    INCLUDE Map2DServer.h
-                    DEPENDS "TARGET YARP::YARP_math"
+                    TYPE RGBDSensorWrapper
+                    INCLUDE RGBDSensorWrapper.h
+                    EXTRA_CONFIG WRAPPER=RGBDSensorWrapper
                     DEFAULT ON)
 
-if(NOT SKIP_map2DServer)
-  yarp_add_plugin(yarp_map2DServer)
+if(NOT SKIP_RGBDSensorWrapper)
+  yarp_add_plugin(yarp_RGBDSensorWrapper)
 
   set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-  target_sources(yarp_map2DServer PRIVATE Map2DServer.cpp
-                                          Map2DServer.h)
+  target_sources(yarp_RGBDSensorWrapper PRIVATE RGBDSensorWrapper.cpp
+                                                RGBDSensorWrapper.h
+                                                rosPixelCode.h)
 
-  target_link_libraries(yarp_map2DServer PRIVATE YARP::YARP_os
-                                                 YARP::YARP_sig
-                                                 YARP::YARP_dev
-                                                 YARP::YARP_math
-                                                 YARP::YARP_rosmsg)
+  target_link_libraries(yarp_RGBDSensorWrapper PRIVATE YARP::YARP_os
+                                                       YARP::YARP_sig
+                                                       YARP::YARP_dev
+                                                       YARP::YARP_rosmsg)
   list(APPEND YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS YARP_os
                                                       YARP_sig
                                                       YARP_dev
-                                                      YARP_math
                                                       YARP_rosmsg)
 
-  yarp_install(TARGETS yarp_map2DServer
+  yarp_install(TARGETS yarp_RGBDSensorWrapper
                EXPORT YARP_${YARP_PLUGIN_MASTER}
                COMPONENT ${YARP_PLUGIN_MASTER}
                LIBRARY DESTINATION ${YARP_DYNAMIC_PLUGINS_INSTALL_DIR}
@@ -39,5 +38,5 @@ if(NOT SKIP_map2DServer)
 
   set(YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS ${YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS} PARENT_SCOPE)
 
-  set_property(TARGET yarp_map2DServer PROPERTY FOLDER "Plugins/Device")
+  set_property(TARGET yarp_RGBDSensorWrapper PROPERTY FOLDER "Plugins/Device")
 endif()

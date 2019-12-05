@@ -4,27 +4,29 @@
 # This software may be modified and distributed under the terms of the
 # BSD-3-Clause license. See the accompanying LICENSE file for details.
 
-yarp_prepare_plugin(rpLidar
+yarp_prepare_plugin(test_motor
                     CATEGORY device
-                    TYPE RpLidar
-                    INCLUDE rpLidar.h)
+                    TYPE TestMotor
+                    INCLUDE TestMotor.h
+                    EXTRA_CONFIG WRAPPER=controlboard
+                    DEFAULT ON)
 
-if(NOT SKIP_rpLidar)
-  yarp_add_plugin(yarp_rpLidar)
+if(NOT SKIP_test_motor)
+  yarp_add_plugin(yarp_test_motor)
 
   set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-  target_sources(yarp_rpLidar PRIVATE rpLidar.h
-                                      rpLidar.cpp)
+  target_sources(yarp_test_motor PRIVATE TestMotor.cpp
+                                         TestMotor.h)
 
-  target_link_libraries(yarp_rpLidar PRIVATE YARP::YARP_os
-                                             YARP::YARP_sig
-                                             YARP::YARP_dev)
+  target_link_libraries(yarp_test_motor PRIVATE YARP::YARP_os
+                                                YARP::YARP_sig
+                                                YARP::YARP_dev)
   list(APPEND YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS YARP_os
                                                       YARP_sig
                                                       YARP_dev)
 
-  yarp_install(TARGETS yarp_rpLidar
+  yarp_install(TARGETS yarp_test_motor
                EXPORT YARP_${YARP_PLUGIN_MASTER}
                COMPONENT ${YARP_PLUGIN_MASTER}
                LIBRARY DESTINATION ${YARP_DYNAMIC_PLUGINS_INSTALL_DIR}
@@ -33,5 +35,5 @@ if(NOT SKIP_rpLidar)
 
   set(YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS ${YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS} PARENT_SCOPE)
 
-  set_property(TARGET yarp_rpLidar PROPERTY FOLDER "Plugins/Device")
+  set_property(TARGET yarp_test_motor PROPERTY FOLDER "Plugins/Device/Fake")
 endif()
