@@ -35,6 +35,7 @@
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/RpcServer.h>
 #include <yarp/sig/Vector.h>
+#include <yarp/dev/IMap2D.h>
 #include <yarp/dev/MapGrid2D.h>
 #include <yarp/dev/Map2DLocation.h>
 #include <yarp/dev/Map2DArea.h>
@@ -75,12 +76,6 @@ class Map2D_nws_ros :
         public yarp::dev::DeviceDriver,
         public yarp::os::PortReader
 {
-private:
-    std::map<std::string, yarp::dev::Nav2D::MapGrid2D>     m_maps_storage;
-    std::map<std::string, yarp::dev::Nav2D::Map2DLocation> m_locations_storage;
-    std::map<std::string, yarp::dev::Nav2D::Map2DPath>     m_paths_storage;
-    std::map<std::string, yarp::dev::Nav2D::Map2DArea>     m_areas_storage;
-
 public:
     Map2D_nws_ros();
     ~Map2D_nws_ros();
@@ -89,10 +84,12 @@ public:
     bool close() override;
 
 private:
-    yarp::os::ResourceFinder     m_rf_mapCollection;
+    yarp::dev::Nav2D::IMap2D*    m_iMap2D = nullptr;
+
+private:
     std::mutex                   m_mutex;
     std::string                  m_rpcPortName;
-    yarp::os::Node*              m_rosNode;
+    yarp::os::Node*              m_rosNode = nullptr;
     bool                         m_enable_publish_ros_map;
     bool                         m_enable_subscribe_ros_map;
 
