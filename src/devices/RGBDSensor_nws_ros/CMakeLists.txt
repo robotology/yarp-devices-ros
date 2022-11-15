@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2006-2021 Istituto Italiano di Tecnologia (IIT)
+# SPDX-FileCopyrightText: 2006-2022 Istituto Italiano di Tecnologia (IIT)
 # SPDX-License-Identifier: BSD-3-Clause
 
 
@@ -19,9 +19,6 @@ if(NOT SKIP_rgbdSensor_nws_ros)
       RgbdSensor_nws_ros.cpp
       RgbdSensor_nws_ros.h
   )
-
-  target_sources(yarp_rgbdSensor_nws_ros PRIVATE $<TARGET_OBJECTS:framegrabber_protocol>)
-  target_include_directories(yarp_rgbdSensor_nws_ros PRIVATE $<TARGET_PROPERTY:framegrabber_protocol,INTERFACE_INCLUDE_DIRECTORIES>)
 
   target_sources(yarp_rgbdSensor_nws_ros PRIVATE $<TARGET_OBJECTS:RGBDRosConversionUtils>)
   target_include_directories(yarp_rgbdSensor_nws_ros PRIVATE $<TARGET_PROPERTY:RGBDRosConversionUtils,INTERFACE_INCLUDE_DIRECTORIES>)

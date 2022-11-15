@@ -1,24 +1,23 @@
-# SPDX-FileCopyrightText: 2006-2021 Istituto Italiano di Tecnologia (IIT)
+# SPDX-FileCopyrightText: 2006-2022 Istituto Italiano di Tecnologia (IIT)
 # SPDX-License-Identifier: BSD-3-Clause
 
-yarp_prepare_plugin(mobileBaseVelocityControl_nws_ros
+yarp_prepare_plugin(laserFromRosTopic
   CATEGORY device
-  TYPE MobileBaseVelocityControl_nws_ros
-  INCLUDE MobileBaseVelocityControl_nws_ros.h
+  TYPE LaserFromRosTopic
+  INCLUDE LaserFromRosTopic.h
   DEPENDS "TARGET YARP::YARP_math"
-  DEFAULT ON
 )
 
-if(NOT SKIP_mobileBaseVelocityControl_nws_ros)
-  yarp_add_plugin(yarp_mobileBaseVelocityControl_nws_ros)
+if(NOT SKIP_laserFromRosTopic)
+  yarp_add_plugin(yarp_laserFromRosTopic)
 
-  target_sources(yarp_mobileBaseVelocityControl_nws_ros
+  target_sources(yarp_laserFromRosTopic
     PRIVATE
-      MobileBaseVelocityControl_nws_ros.cpp
-      MobileBaseVelocityControl_nws_ros.h
+      LaserFromRosTopic.h
+      LaserFromRosTopic.cpp
   )
 
-  target_link_libraries(yarp_mobileBaseVelocityControl_nws_ros
+  target_link_libraries(yarp_laserFromRosTopic
     PRIVATE
       YARP::YARP_os
       YARP::YARP_sig
@@ -35,7 +34,7 @@ if(NOT SKIP_mobileBaseVelocityControl_nws_ros)
   )
 
   yarp_install(
-    TARGETS yarp_mobileBaseVelocityControl_nws_ros
+    TARGETS yarp_laserFromRosTopic
     EXPORT YARP_${YARP_PLUGIN_MASTER}
     COMPONENT ${YARP_PLUGIN_MASTER}
     LIBRARY DESTINATION ${YARP_DYNAMIC_PLUGINS_INSTALL_DIR}
@@ -45,5 +44,5 @@ if(NOT SKIP_mobileBaseVelocityControl_nws_ros)
 
   set(YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS ${YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS} PARENT_SCOPE)
 
-  set_property(TARGET yarp_mobileBaseVelocityControl_nws_ros PROPERTY FOLDER "Plugins/Device/NWS")
+  set_property(TARGET yarp_laserFromRosTopic PROPERTY FOLDER "Plugins/Device")
 endif()

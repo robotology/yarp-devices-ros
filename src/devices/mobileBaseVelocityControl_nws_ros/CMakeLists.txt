@@ -1,26 +1,24 @@
-# SPDX-FileCopyrightText: 2006-2021 Istituto Italiano di Tecnologia (IIT)
+# SPDX-FileCopyrightText: 2006-2022 Istituto Italiano di Tecnologia (IIT)
 # SPDX-License-Identifier: BSD-3-Clause
 
-yarp_prepare_plugin(map2D_nws_ros
+yarp_prepare_plugin(mobileBaseVelocityControl_nws_ros
   CATEGORY device
-  TYPE Map2D_nws_ros
-  INCLUDE Map2D_nws_ros.h
+  TYPE MobileBaseVelocityControl_nws_ros
+  INCLUDE MobileBaseVelocityControl_nws_ros.h
   DEPENDS "TARGET YARP::YARP_math"
-  EXTRA_CONFIG
-    WRAPPER=map2D_nws_ros
   DEFAULT ON
 )
 
-if(NOT SKIP_map2D_nws_ros)
-  yarp_add_plugin(yarp_map2D_nws_ros)
+if(NOT SKIP_mobileBaseVelocityControl_nws_ros)
+  yarp_add_plugin(yarp_mobileBaseVelocityControl_nws_ros)
 
-  target_sources(yarp_map2D_nws_ros
+  target_sources(yarp_mobileBaseVelocityControl_nws_ros
     PRIVATE
-      Map2D_nws_ros.cpp
-      Map2D_nws_ros.h
+      MobileBaseVelocityControl_nws_ros.cpp
+      MobileBaseVelocityControl_nws_ros.h
   )
 
-  target_link_libraries(yarp_map2D_nws_ros
+  target_link_libraries(yarp_mobileBaseVelocityControl_nws_ros
     PRIVATE
       YARP::YARP_os
       YARP::YARP_sig
@@ -37,7 +35,7 @@ if(NOT SKIP_map2D_nws_ros)
   )
 
   yarp_install(
-    TARGETS yarp_map2D_nws_ros
+    TARGETS yarp_mobileBaseVelocityControl_nws_ros
     EXPORT YARP_${YARP_PLUGIN_MASTER}
     COMPONENT ${YARP_PLUGIN_MASTER}
     LIBRARY DESTINATION ${YARP_DYNAMIC_PLUGINS_INSTALL_DIR}
@@ -47,5 +45,5 @@ if(NOT SKIP_map2D_nws_ros)
 
   set(YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS ${YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS} PARENT_SCOPE)
 
-  set_property(TARGET yarp_map2D_nws_ros PROPERTY FOLDER "Plugins/Device/NWS")
+  set_property(TARGET yarp_mobileBaseVelocityControl_nws_ros PROPERTY FOLDER "Plugins/Device/NWS")
 endif()

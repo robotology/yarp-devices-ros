@@ -1,40 +1,42 @@
-# SPDX-FileCopyrightText: 2006-2021 Istituto Italiano di Tecnologia (IIT)
+# SPDX-FileCopyrightText: 2006-2022 Istituto Italiano di Tecnologia (IIT)
 # SPDX-License-Identifier: BSD-3-Clause
 
-yarp_prepare_plugin(laserFromRosTopic
+
+yarp_prepare_plugin(odometry2D_nws_ros
   CATEGORY device
-  TYPE LaserFromRosTopic
-  INCLUDE LaserFromRosTopic.h
+  TYPE Odometry2D_nws_ros
+  INCLUDE Odometry2D_nws_ros.h
+  EXTRA_CONFIG
+    WRAPPER=odometry2D_nws_ros
   DEPENDS "TARGET YARP::YARP_math"
+  DEFAULT ON
 )
 
-if(NOT SKIP_laserFromRosTopic)
-  yarp_add_plugin(yarp_laserFromRosTopic)
+if(NOT SKIP_odometry2D_nws_ros)
+  yarp_add_plugin(yarp_odometry2D_nws_ros)
 
-  target_sources(yarp_laserFromRosTopic
+  target_sources(yarp_odometry2D_nws_ros
     PRIVATE
-      LaserFromRosTopic.h
-      LaserFromRosTopic.cpp
+      Odometry2D_nws_ros.cpp
+      Odometry2D_nws_ros.h
   )
 
-  target_link_libraries(yarp_laserFromRosTopic
+  target_link_libraries(yarp_odometry2D_nws_ros
     PRIVATE
       YARP::YARP_os
       YARP::YARP_sig
       YARP::YARP_dev
-      YARP::YARP_math
       YARP::YARP_rosmsg
   )
   list(APPEND YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS
     YARP_os
     YARP_sig
     YARP_dev
-    YARP_math
     YARP_rosmsg
   )
 
   yarp_install(
-    TARGETS yarp_laserFromRosTopic
+    TARGETS yarp_odometry2D_nws_ros
     EXPORT YARP_${YARP_PLUGIN_MASTER}
     COMPONENT ${YARP_PLUGIN_MASTER}
     LIBRARY DESTINATION ${YARP_DYNAMIC_PLUGINS_INSTALL_DIR}
@@ -44,5 +46,5 @@ if(NOT SKIP_laserFromRosTopic)
 
   set(YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS ${YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS} PARENT_SCOPE)
 
-  set_property(TARGET yarp_laserFromRosTopic PROPERTY FOLDER "Plugins/Device")
+  set_property(TARGET yarp_odometry2D_nws_ros PROPERTY FOLDER "Plugins/Device/NWS")
 endif()

@@ -1,31 +1,25 @@
-# SPDX-FileCopyrightText: 2006-2021 Istituto Italiano di Tecnologia (IIT)
+# SPDX-FileCopyrightText: 2006-2022 Istituto Italiano di Tecnologia (IIT)
 # SPDX-License-Identifier: BSD-3-Clause
 
-yarp_prepare_plugin(
-  controlBoard_nws_ros
+yarp_prepare_plugin(rangefinder2D_nws_ros
   CATEGORY device
-  TYPE ControlBoard_nws_ros
-  INCLUDE ControlBoard_nws_ros.h
+  TYPE Rangefinder2D_nws_ros
+  INCLUDE Rangefinder2D_nws_ros.h
   EXTRA_CONFIG
-    WRAPPER=controlBoard_nws_ros
+    WRAPPER=rangefinder2D_nws_ros
   DEFAULT ON
 )
 
-if(NOT SKIP_controlBoard_nws_ros)
-  yarp_add_plugin(yarp_controlBoard_nws_ros)
+if(NOT SKIP_rangefinder2D_nws_ros)
+  yarp_add_plugin(yarp_rangefinder2D_nws_ros)
 
-  target_compile_definitions(yarp_controlBoard_nws_ros
+  target_sources(yarp_rangefinder2D_nws_ros
     PRIVATE
-      LOG_COMPONENT="yarp.devices.controlBoard_nws_ros"
+      Rangefinder2D_nws_ros.cpp
+      Rangefinder2D_nws_ros.h
   )
 
-  target_sources(yarp_controlBoard_nws_ros
-    PRIVATE
-      ControlBoard_nws_ros.cpp
-      ControlBoard_nws_ros.h
-  )
-
-  target_link_libraries(yarp_controlBoard_nws_ros
+  target_link_libraries(yarp_rangefinder2D_nws_ros
     PRIVATE
       YARP::YARP_os
       YARP::YARP_sig
@@ -40,7 +34,7 @@ if(NOT SKIP_controlBoard_nws_ros)
   )
 
   yarp_install(
-    TARGETS yarp_controlBoard_nws_ros
+    TARGETS yarp_rangefinder2D_nws_ros
     EXPORT YARP_${YARP_PLUGIN_MASTER}
     COMPONENT ${YARP_PLUGIN_MASTER}
     LIBRARY DESTINATION ${YARP_DYNAMIC_PLUGINS_INSTALL_DIR}
@@ -50,5 +44,5 @@ if(NOT SKIP_controlBoard_nws_ros)
 
   set(YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS ${YARP_${YARP_PLUGIN_MASTER}_PRIVATE_DEPS} PARENT_SCOPE)
 
-  set_property(TARGET yarp_controlBoard_nws_ros PROPERTY FOLDER "Plugins/Device/NWS")
+  set_property(TARGET yarp_rangefinder2D_nws_ros PROPERTY FOLDER "Plugins/Device/NWS")
 endif()
