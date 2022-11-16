@@ -111,21 +111,6 @@ bool Odometry2D_nws_ros::open(yarp::os::Searchable &config)
     }
     m_baseFrame = config.find("base_frame").asString();
 
-    if (config.check("subdevice")) {
-        yarp::os::Property p;
-        p.fromString(config.toString(), false);
-        p.put("device", config.find("subdevice").asString());
-
-        if (!m_driver.open(p) || !m_driver.isValid()) {
-            yCError(ODOMETRY2D_NWS_ROS) << "failed to open subdevice.. check params";
-            return false;
-        }
-
-        if (!attach(&m_driver)) {
-            yCError(ODOMETRY2D_NWS_ROS) << "failed to open subdevice.. check params";
-            return false;
-        }
-    }
     m_node = new yarp::os::Node(m_nodeName);
     if (m_node == nullptr) {
         yCError(ODOMETRY2D_NWS_ROS) << " opening " << m_nodeName << " Node, check your yarp-ROS network configuration\n";

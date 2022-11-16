@@ -51,14 +51,6 @@ bool FrameGrabber_nws_ros::close()
         node = nullptr;
     }
 
-    if (subdevice) {
-        subdevice->close();
-        delete subdevice;
-        subdevice = nullptr;
-    }
-
-    isSubdeviceOwned = false;
-
     return true;
 }
 
@@ -130,31 +122,7 @@ bool FrameGrabber_nws_ros::open(yarp::os::Searchable& config)
     }
     m_frameId = config.find("frame_id").asString();
 
-    // Check "subdevice" option and eventually open the device
-    isSubdeviceOwned = config.check("subdevice");
-    if (isSubdeviceOwned) {
-        yarp::os::Property p;
-        subdevice = new yarp::dev::PolyDriver;
-        p.fromString(config.toString());
-        p.put("pixelType", VOCAB_PIXEL_RGB);
-        p.setMonitor(config.getMonitor(), "subdevice"); // pass on any monitoring
-        p.unput("device");
-        p.put("device", config.find("subdevice").asString()); // subdevice was already checked before
-
-        // if errors occurred during open, quit here.
-        subdevice->open(p);
-
-        if (!(subdevice->isValid())) {
-            yCError(FRAMEGRABBER_NWS_ROS, "Unable to open subdevice");
-            return false;
-        }
-        if (!attach(subdevice)) {
-            yCError(FRAMEGRABBER_NWS_ROS, "Unable to attach subdevice");
-            return false;
-        }
-    } else {
-        yCInfo(FRAMEGRABBER_NWS_ROS) << "Running, waiting for attach...";
-    }
+    yCInfo(FRAMEGRABBER_NWS_ROS) << "Running, waiting for attach...";
 
     m_active = true;
 

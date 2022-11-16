@@ -36,7 +36,6 @@
  * | node_name       | String | -       | -             | Yes       | the name of the ros node                 | must begin with /      |
  * | topic_name      | String | -       | -             | Yes       | the name of the ros topic                | must begin with /      |
  * | frame_id        | String | -       | -             | Yes       | the frame where the grabber is placed    |       |
- * | subdevice       | string | -       |  -            | Yes       | the name of the grabber used             | -     |
  *
  */
 
@@ -53,10 +52,6 @@ private:
     yarp::os::Node* node {nullptr};
     ImageTopicType publisherPort_image;
     CameraInfoTopicType publisherPort_cameraInfo;
-
-    // Subdevice
-    yarp::dev::PolyDriver* subdevice {nullptr};
-    bool isSubdeviceOwned {false};
 
     // Interfaces handled
     yarp::dev::IRgbVisualParams* iRgbVisualParams {nullptr};

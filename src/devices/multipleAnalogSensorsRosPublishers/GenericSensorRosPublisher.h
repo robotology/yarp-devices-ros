@@ -56,7 +56,6 @@ protected:
     double                 m_timestamp;
     std::string            m_framename;
     const size_t           m_sens_index = 0;
-    yarp::dev::PolyDriver  m_subdevicedriver;
 
 public:
     GenericSensorRosPublisher();
@@ -145,27 +144,6 @@ bool GenericSensorRosPublisher<ROS_MSG>::open(yarp::os::Searchable & config)
     if (!m_publisher.topic(m_publisherName)) {
         yCError(GENERICSENSORROSPUBLISHER) << "Opening " << m_publisherName << " Topic, check your yarp-ROS network configuration\n";
         return false;
-    }
-
-    if (config.check("subdevice"))
-    {
-        yarp::os::Property       p;
-        yarp::dev::PolyDriverList driverlist;
-        p.fromString(config.toString(), false);
-        p.put("device", config.find("subdevice").asString());
-
-        if (!m_subdevicedriver.open(p) || !m_subdevicedriver.isValid())
-        {
-            yCError(GENERICSENSORROSPUBLISHER) << "Failed to open subdevice.. check params";
-            return false;
-        }
-
-        driverlist.push(&m_subdevicedriver, "1");
-        if (!attachAll(driverlist))
-        {
-            yCError(GENERICSENSORROSPUBLISHER) << "Failed to open subdevice.. check params";
-            return false;
-        }
     }
 
     return true;

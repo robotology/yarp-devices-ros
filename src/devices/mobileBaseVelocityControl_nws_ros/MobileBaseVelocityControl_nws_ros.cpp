@@ -71,29 +71,7 @@ bool MobileBaseVelocityControl_nws_ros::open(yarp::os::Searchable& config)
         m_ros_topic_name = config.find("topic_name").asString();
     }
 
-    //attach subdevice if required
-    if (config.check("subdevice"))
-    {
-        Property       p;
-        p.fromString(config.toString(), false);
-        p.put("device", config.find("subdevice").asString());
-
-        if (!m_subdev.open(p) || !m_subdev.isValid())
-        {
-            yCError(MOBVEL_NWS_ROS) << "Failed to open subdevice.. check params";
-            return false;
-        }
-
-        if (!attach(&m_subdev))
-        {
-            yCError(MOBVEL_NWS_ROS) << "Failed to attach subdevice.. check params";
-            return false;
-        }
-    }
-    else
-    {
-        yCInfo(MOBVEL_NWS_ROS) << "Waiting for device to attach";
-    }
+    yCInfo(MOBVEL_NWS_ROS) << "Waiting for device to be attached";
 
     //open the subscriber
     m_ros_node = new yarp::os::Node(m_ros_node_name);
@@ -137,7 +115,7 @@ bool MobileBaseVelocityControl_nws_ros::attach(PolyDriver* driver)
 
     if (nullptr == iNavVel)
     {
-        yCError(MOBVEL_NWS_ROS, "Subdevice passed to attach method is invalid");
+        yCError(MOBVEL_NWS_ROS, "Unable to view INavigation2DVelocityActions interface. Attach failed.");
         return false;
     }
 

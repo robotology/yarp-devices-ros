@@ -39,7 +39,6 @@
  * | node_name       |      -         | string  | -              |   -           | Yes                         | set the name for ROS node                                         | must start with a leading '/' |
  * | topic_name      |      -         | string  | -              |   -           | Yes                         | set the name for ROS topic                                        | must start with a leading '/', recommended value is /joint_states |
  * | period          |      -         | double  | s              |   0.02        | No                          | refresh period of the broadcasted values in s                     | optional, default 20ms |
- * | subdevice       |      -         | string  | -              |   -           | No                          | name of the subdevice to instantiate                              | when used, parameters for the subdevice must be provided as well |
  *
  * ROS message type used is sensor_msgs/JointState.msg (http://docs.ros.org/api/sensor_msgs/html/msg/JointState.html)
  */
@@ -69,18 +68,15 @@ private:
 
     yarp::os::Stamp time; // envelope to attach to the state port
 
-    yarp::dev::DeviceDriver* subdevice_ptr{nullptr};
-    bool subdevice_owned {true};
+    yarp::dev::DeviceDriver* m_attached_device_ptr{nullptr};
     size_t subdevice_joints {0};
-    bool subdevice_ready = false;
 
     yarp::dev::IPositionControl* iPositionControl{nullptr};
     yarp::dev::IEncodersTimed* iEncodersTimed{nullptr};
     yarp::dev::ITorqueControl* iTorqueControl{nullptr};
     yarp::dev::IAxisInfo* iAxisInfo{nullptr};
 
-    bool setDevice(yarp::dev::DeviceDriver* device, bool owned);
-    bool openAndAttachSubDevice(yarp::os::Property& prop);
+    bool setDevice(yarp::dev::DeviceDriver* device);
 
     void closeDevice();
     void closePorts();

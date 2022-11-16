@@ -56,7 +56,6 @@
    * | Parameter name  | SubParameter            | Type    | Units          | Default Value | Required                       | Description                                                           | Notes        |
    * |:---------------:|:-----------------------:|:-------:|:--------------:|:-------------:|:-----------------------------: |:---------------------------------------------------------------------:|:------------:|
    * | period          |      -                  | int     | ms             |   20          | No                             | refresh period of the broadcasted values in ms                        | default 20ms |
-   * | subdevice       |      -                  | string  | -              |   -           | alternative to 'attach' action | name of the subdevice to use as a data source                         | when used, parameters for the subdevice must be provided as well |
    * | node_name       |      -                  | string  | -              |   -           | Yes                            | name of ROS node,  e.g. /myRobotName                                  | -           |
    * | topic_name      |      -                  | string  | -              |   -           | Yes                            | name of ROS topic, e.g. /Rangefinder2DSensor                          | -           |
    * | frame_id        |      -                  | string  | -              |   -           | Yes                            | name of the attached frame                                            | -           |
@@ -113,7 +112,6 @@ private:
     double minAngle, maxAngle;
     double minDistance, maxDistance;
     double resolution;
-    bool   isDeviceOwned;
 
 private:
     //private methods

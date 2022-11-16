@@ -53,7 +53,6 @@ namespace RGBDToPointCloudImpl{
  * | Parameter name         | SubParameter            | Type    | Units          | Default Value | Required                        | Description                                                                                         | Notes |
  * |:----------------------:|:-----------------------:|:-------:|:--------------:|:-------------:|:------------------------------: |:---------------------------------------------------------------------------------------------------:|:-----:|
  * | period                 |      -                  | double  |  s             |   0.033       |  No                             | refresh period of the broadcasted values in s                                                       | default 0.033 s |
- * | subdevice              |      -                  | string  |  -             |   -           |  alternative to 'attach' action | name of the subdevice to use as a data source                                                       | when used, parameters for the subdevice must be provided as well |
  * | topic_name             |      -                  | string  |  -             |               |  Yes                            | set the name for ROS point cloud topic                                                              | must start with a leading '/' |
  * | frame_id               |      -                  | string  |  -             |               |  Yes                            | set the name of the reference frame                                                                 |                               |
  * | node_name              |      -                  | string  |  -             |   -           |  Yes                            | set the name for ROS node                                                                           | must start with a leading '/' |
@@ -126,12 +125,6 @@ private:
     // Open the wrapper only, the attach method needs to be called before using it
     // Typical usage: yarprobotinterface
     bool                           openDeferredAttach(yarp::os::Searchable& prop);
-
-    // If a subdevice parameter is given, the wrapper will open it and attach to immediately.
-    // Typical usage: simulator or command line
-    bool                           isSubdeviceOwned = false;
-    yarp::dev::PolyDriver*         subDeviceOwned = nullptr;
-    bool                           openAndAttachSubDevice(yarp::os::Searchable& prop);
 
     // Synch
     yarp::os::Stamp                colorStamp;

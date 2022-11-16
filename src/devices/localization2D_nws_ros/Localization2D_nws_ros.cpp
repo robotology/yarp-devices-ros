@@ -55,7 +55,7 @@ bool Localization2D_nws_ros::attach(PolyDriver* driver)
 
     if (nullptr == iLoc)
     {
-        yCError(LOCALIZATION2D_NWS_ROS, "Subdevice passed to attach method is invalid");
+        yCError(LOCALIZATION2D_NWS_ROS, "Unable to view ILocalization2D interface. Attach failed?");
         return false;
     }
 
@@ -130,27 +130,8 @@ bool Localization2D_nws_ros::open(Searchable& config)
 
     m_rpcPortName = m_local_name + "/rpc";
 
-    if (config.check("subdevice"))
-    {
-        Property       p;
-        p.fromString(config.toString(), false);
-        p.put("device", config.find("subdevice").asString());
+    yCInfo(LOCALIZATION2D_NWS_ROS) << "Waiting for device to attach";
 
-        if (!pLoc.open(p) || !pLoc.isValid())
-        {
-            yCError(LOCALIZATION2D_NWS_ROS) << "Failed to open subdevice.. check params";
-            return false;
-        }
-        if (!attach(&pLoc))
-        {
-            yCError(LOCALIZATION2D_NWS_ROS) << "Failed to open subdevice.. check params";
-            return false;
-        }
-    }
-    else
-    {
-        yCInfo(LOCALIZATION2D_NWS_ROS) << "Waiting for device to attach";
-    }
     m_stats_time_last = yarp::os::Time::now();
 
     if (!initialize_YARP(config))

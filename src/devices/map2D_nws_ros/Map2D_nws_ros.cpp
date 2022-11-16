@@ -101,29 +101,7 @@ bool Map2D_nws_ros::open(yarp::os::Searchable &config)
         m_rpcPortName = config.find("name").asString();
     }
 
-    //subdevice handling
-    if (config.check("subdevice"))
-    {
-        Property       p;
-        p.fromString(config.toString(), false);
-        p.put("device", config.find("subdevice").asString());
-
-        if (!m_drv.open(p) || !m_drv.isValid())
-        {
-            yCError(MAP2D_NWS_ROS) << "Failed to open subdevice.. check params";
-            return false;
-        }
-
-        if (!attach(&m_drv))
-        {
-            yCError(MAP2D_NWS_ROS) << "Failed to open subdevice.. check params";
-            return false;
-        }
-    }
-    else
-    {
-        yCInfo(MAP2D_NWS_ROS) << "Waiting for device to attach";
-    }
+    yCInfo(MAP2D_NWS_ROS) << "Waiting for device to attach";
 
     //open rpc port
     if (!m_rpcPort.open(m_rpcPortName))
@@ -414,7 +392,7 @@ bool Map2D_nws_ros::attach(PolyDriver* driver)
 
     if (nullptr == m_iMap2D)
     {
-        yCError(MAP2D_NWS_ROS, "Subdevice passed to attach method is invalid");
+        yCError(MAP2D_NWS_ROS, "Unable to view IMap2D interface. Attach failed");
         return false;
     }
 

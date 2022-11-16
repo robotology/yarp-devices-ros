@@ -44,7 +44,6 @@
   * | child_frame_id   | string  |  -             | base_link                | No           | The name of the of the child frame published in the /tf topic      | -     |
   * | topic_name       | string  |  -             |                          | Yes          | The name of the of the odometry topic                              | -     |
   * | node_name        | string  |  -             |                          | Yes          | The name of the of the ROS node                                    | -     |
-  * | subdevice        | string  |  -             |  -                       | Yes          | The name of the of Localization device to be used                  | -     |
   */
 class Localization2D_nws_ros :
         public yarp::dev::DeviceDriver,

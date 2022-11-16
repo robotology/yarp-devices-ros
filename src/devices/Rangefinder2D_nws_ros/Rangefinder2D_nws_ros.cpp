@@ -35,8 +35,7 @@ Rangefinder2D_nws_ros::Rangefinder2D_nws_ros() : PeriodicThread(DEFAULT_THREAD_P
     maxAngle(0),
     minDistance(0),
     maxDistance(0),
-    resolution(0),
-    isDeviceOwned(false)
+    resolution(0)
 {}
 
 Rangefinder2D_nws_ros::~Rangefinder2D_nws_ros()
@@ -113,7 +112,7 @@ bool Rangefinder2D_nws_ros::attach(yarp::dev::PolyDriver* driver)
 
     if (nullptr == sens_p)
     {
-        yCError(RANGEFINDER2D_NWS_ROS, "Rangefinder2DWrapper: subdevice passed to attach method is invalid");
+        yCError(RANGEFINDER2D_NWS_ROS, "View of IRangeFinder2DInterface failed. Attach failed.");
         return false;
     }
     attach(sens_p);
@@ -180,25 +179,6 @@ bool Rangefinder2D_nws_ros::open(yarp::os::Searchable &config)
         return false;
     }
 
-    if(config.check("subdevice"))
-    {
-        Property       p;
-        p.fromString(config.toString(), false);
-        p.put("device", config.find("subdevice").asString());
-
-        if(!m_driver.open(p) || !m_driver.isValid())
-        {
-            yCError(RANGEFINDER2D_NWS_ROS) << "failed to open subdevice.. check params";
-            return false;
-        }
-
-        if(!attach(&m_driver))
-        {
-            yCError(RANGEFINDER2D_NWS_ROS) << "failed to open subdevice.. check params";
-            return false;
-        }
-        isDeviceOwned = true;
-    }
     return true;
 }
 

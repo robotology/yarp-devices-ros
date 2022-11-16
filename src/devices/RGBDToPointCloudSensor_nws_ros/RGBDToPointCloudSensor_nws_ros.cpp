@@ -76,65 +76,12 @@ bool RGBDToPointCloudSensor_nws_ros::open(yarp::os::Searchable &config)
         return false;
     }
 
-    // check if we need to create subdevice or if they are
-    // passed later on through attachAll()
-    if(config.check("subdevice")) {
-        if(! openAndAttachSubDevice(config))
-        {
-            yCError(RGBDTOPOINTCLOUDSENSORNWSROS, "Error while opening subdevice");
-            return false;
-        }
-        isSubdeviceOwned=true;
-    } else {
-        isSubdeviceOwned=false;
-    }
-    return true;
-}
-
-bool RGBDToPointCloudSensor_nws_ros::openAndAttachSubDevice(Searchable& prop)
-{
-    Property p;
-    subDeviceOwned = new PolyDriver;
-    p.fromString(prop.toString());
-
-    p.setMonitor(prop.getMonitor(), "subdevice"); // pass on any monitoring
-    p.unput("device");
-    p.put("device",prop.find("subdevice").asString());  // subdevice was already checked before
-
-    // if errors occurred during open, quit here.
-    yCDebug(RGBDTOPOINTCLOUDSENSORNWSROS, "Opening IRGBDSensor subdevice");
-    subDeviceOwned->open(p);
-
-    if (!subDeviceOwned->isValid())
-    {
-        yCError(RGBDTOPOINTCLOUDSENSORNWSROS, "Opening IRGBDSensor subdevice... FAILED");
-        return false;
-    }
-    isSubdeviceOwned = true;
-    if(!attach(subDeviceOwned)) {
-        return false;
-    }
-
-    return true;
 }
 
 bool RGBDToPointCloudSensor_nws_ros::close()
 {
     yCTrace(RGBDTOPOINTCLOUDSENSORNWSROS, "Close");
     detach();
-
-    // close subdevice if it was created inside the open (--subdevice option)
-    if(isSubdeviceOwned)
-    {
-        if(subDeviceOwned)
-        {
-            delete subDeviceOwned;
-            subDeviceOwned=nullptr;
-        }
-        sensor_p = nullptr;
-        fgCtrl = nullptr;
-        isSubdeviceOwned = false;
-    }
 
     if(m_node !=nullptr)
     {
@@ -157,11 +104,6 @@ bool RGBDToPointCloudSensor_nws_ros::detach()
         yarp::os::PeriodicThread::stop();
     }
 
-    //check if we already instantiated a subdevice previously
-    if (isSubdeviceOwned)
-    {
-        return false;
-    }
     sensor_p = nullptr;
     return true;
 }

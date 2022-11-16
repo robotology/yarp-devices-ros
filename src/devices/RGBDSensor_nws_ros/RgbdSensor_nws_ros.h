@@ -60,7 +60,6 @@ namespace RGBDImpl
  * | Parameter name         | SubParameter            | Type    | Units          | Default Value | Required                        | Description                                                                                         | Notes |
  * |:----------------------:|:-----------------------:|:-------:|:--------------:|:-------------:|:------------------------------: |:---------------------------------------------------------------------------------------------------:|:-----:|
  * | period                 |      -                  | double  | s              |   0.03        |  No                             | refresh period of the broadcasted values in s                                                       | default 0.03s |
- * | subdevice              |      -                  | string  |  -             |   -           |  alternative to 'attach' action | name of the subdevice to use as a data source                                                       | when used, parameters for the subdevice must be provided as well |
  * | forceInfoSync          |      -                  | string  | bool           |   -           |  no                             | set 'true' to force the timestamp on the camera_info message to match the image one                 |  - |
  * | color_topic_name       |      -                  | string  | -              |   -           |  Yes                            | the color topic                                                                                     | recommended value /camera/color/image_rect_color  |
  * | depth_topic_name       |      -                  | string  | -              |   -           |  Yes                            | the depth topic                                                                                     | recommended value /camera/depth/image_rect  |
@@ -132,16 +131,6 @@ private:
     int                            verbose;
     bool                           forceInfoSync;
     bool                           initialize_ROS(yarp::os::Searchable& config);
-
-    // Open the wrapper only, the attach method needs to be called before using it
-    // Typical usage: yarprobotinterface
-    bool                           openDeferredAttach(yarp::os::Searchable& prop);
-
-    // If a subdevice parameter is given, the wrapper will open it and attach to immediately.
-    // Typical usage: simulator or command line
-    bool                           isSubdeviceOwned;
-    yarp::dev::PolyDriver*         subDeviceOwned;
-    bool                           openAndAttachSubDevice(yarp::os::Searchable& prop);
 
     // Synch
     yarp::os::Stamp                colorStamp;
