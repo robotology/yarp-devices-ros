@@ -147,3 +147,8 @@ target_include_directories(YARP_harness_no_network
 
 set_property(TARGET YARP_harness_no_network PROPERTY FOLDER "Test")
 
+#########################################################################
+# Add subdirectories containing the actual tests
+
+add_subdirectory(misc)
+
