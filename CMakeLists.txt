@@ -5,7 +5,7 @@
 # BSD-3-Clause license. See the accompanying LICENSE file for details.
 
 cmake_minimum_required(VERSION 3.16)
-project(yarp-devices-ros-nwx
+project(yarp-devices-ros
         LANGUAGES CXX
         VERSION 0.1.0)
 
@@ -30,7 +30,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-set(YARP_FORCE_DYNAMIC_PLUGINS TRUE CACHE INTERNAL "yarp-devices-ros-nwx is always built with dynamic plugins")
+set(YARP_FORCE_DYNAMIC_PLUGINS TRUE CACHE INTERNAL "yarp-devices-ros is always built with dynamic plugins")
 set(BUILD_SHARED_LIBS OFF CACHE INTERNAL "Build libraries as shared as opposed to static")
 
 find_package(YARP 3.7.2 COMPONENTS os sig dev rosmsg serversql OPTIONAL_COMPONENTS math REQUIRED)
@@ -67,7 +67,7 @@ include(AddUninstallTarget)
 set(CMAKE_C_FLAGS "${YARP_C_FLAGS} ${CMAKE_C_FLAGS}")
 set(CMAKE_CXX_FLAGS "${YARP_CXX_FLAGS} ${CMAKE_CXX_FLAGS}")
 
-yarp_configure_plugins_installation(yarp-devices-ros-nwx)
+yarp_configure_plugins_installation(yarp-devices-ros)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES)
 
