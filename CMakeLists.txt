@@ -33,6 +33,20 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set(YARP_FORCE_DYNAMIC_PLUGINS TRUE CACHE INTERNAL "yarp-devices-ros-nwx is always built with dynamic plugins")
 set(BUILD_SHARED_LIBS OFF CACHE INTERNAL "Build libraries as shared as opposed to static")
 
+find_package(YARP 3.7.2 COMPONENTS os sig dev rosmsg serversql OPTIONAL_COMPONENTS math REQUIRED)
+find_package(YARP 3.7.2 COMPONENTS catch2 dev_tests QUIET)
+
+if(YARP_catch2_FOUND AND YARP_dev_tests_FOUND)
+  option(YARP_COMPILE_TESTS "Enable YARP tests" OFF)
+  if(YARP_COMPILE_TESTS)
+    enable_testing()
+  endif()
+  message (STATUS "yarp_catch2 and yarp_dev_tests libraries found")
+else()
+  SET(YARP_COMPILE_TESTS OFF CACHE BOOL "yarp_catch2 and yarp_dev_tests libraries NOT found. Tests cannot be enabled" FORCE)
+  message (STATUS "yarp_catch2 and yarp_dev_tests libraries NOT found. Tests cannot be enabled")
+endif()
+
 include(AddInstallRPATHSupport)
 add_install_rpath_support(BIN_DIRS "${CMAKE_INSTALL_FULL_BINDIR}"
                           LIB_DIRS "${CMAKE_INSTALL_FULL_LIBDIR}"
@@ -50,7 +64,6 @@ set_property(GLOBAL PROPERTY USE_FOLDERS 1)
 
 include(AddUninstallTarget)
 
-find_package(YARP 3.7.2 COMPONENTS os sig dev rosmsg OPTIONAL_COMPONENTS math REQUIRED)
 set(CMAKE_C_FLAGS "${YARP_C_FLAGS} ${CMAKE_C_FLAGS}")
 set(CMAKE_CXX_FLAGS "${YARP_CXX_FLAGS} ${CMAKE_CXX_FLAGS}")
 
@@ -59,3 +72,4 @@ yarp_configure_plugins_installation(yarp-devices-ros-nwx)
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES)
 
 add_subdirectory(src)
+add_subdirectory(tests)
