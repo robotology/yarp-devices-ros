@@ -11,7 +11,7 @@ project(yarp-devices-ros
 
 include(FeatureSummary)
 
-find_package(YCM 0.12 REQUIRED)
+find_package(YCM 0.14 REQUIRED)
 
 include(GNUInstallDirs)
 
