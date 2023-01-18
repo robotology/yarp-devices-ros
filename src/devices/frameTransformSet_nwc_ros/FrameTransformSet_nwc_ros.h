@@ -24,7 +24,7 @@
 #include <yarp/rosmsg/geometry_msgs/TransformStamped.h>
 #include <yarp/rosmsg/tf2_msgs/TFMessage.h>
 
-#include <FrameTransformContainer.h>
+#include <yarp/dev/FrameTransformContainer.h>
 #include <map>
 #include <mutex>
 
@@ -104,7 +104,7 @@ private:
     yarp::os::Node*                                        m_rosNode{nullptr};
     yarp::os::Publisher<yarp::rosmsg::tf2_msgs::TFMessage> m_rosPublisherPort_tf_timed;
     yarp::os::Publisher<yarp::rosmsg::tf2_msgs::TFMessage> m_rosPublisherPort_tf_static;
-    FrameTransformContainer                                m_ftContainer;
+    yarp::dev::FrameTransformContainer                     m_ftContainer;
 };
 
 #endif // YARP_DEV_FRAMETRANSFORMSETNWCROS_H

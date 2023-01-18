@@ -4,8 +4,8 @@
  */
 
 #include "IMURosPublisher.h"
-#include "Yarp/math/Quaternion.h"
-#include "Yarp/math/Math.h"
+#include "yarp/math/Quaternion.h"
+#include "yarp/math/Math.h"
 
 #ifndef M_PI
 #define M_PI (3.14159265358979323846)

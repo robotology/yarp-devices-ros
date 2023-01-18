@@ -21,9 +21,6 @@ if(NOT SKIP_frameTransformGet_nwc_ros)
       FrameTransformGet_nwc_ros.h
   )
 
-  target_sources(yarp_frameTransformGet_nwc_ros PRIVATE $<TARGET_OBJECTS:FrameTransformUtils>)
-  target_include_directories(yarp_frameTransformGet_nwc_ros PRIVATE $<TARGET_PROPERTY:FrameTransformUtils,INTERFACE_INCLUDE_DIRECTORIES>)
-
   target_link_libraries(yarp_frameTransformGet_nwc_ros
     PRIVATE
       YARP::YARP_os
