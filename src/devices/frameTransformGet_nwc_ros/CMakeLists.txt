@@ -8,7 +8,7 @@ yarp_prepare_plugin(frameTransformGet_nwc_ros
   INCLUDE FrameTransformGet_nwc_ros.h
   DEPENDS "TARGET YARP::YARP_math"
   EXTRA_CONFIG
-    WRAPPER=frameTransformGet_nws_yarp
+    WRAPPER=frameTransformGet_nwc_ros
   DEFAULT ON
 )
 

@@ -6,6 +6,7 @@ yarp_prepare_plugin(laserFromRosTopic
   TYPE LaserFromRosTopic
   INCLUDE LaserFromRosTopic.h
   DEPENDS "TARGET YARP::YARP_math"
+  DEFAULT ON
 )
 
 if(NOT SKIP_laserFromRosTopic)

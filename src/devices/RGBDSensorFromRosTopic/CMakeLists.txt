@@ -7,6 +7,7 @@ yarp_prepare_plugin(RGBDSensorFromRosTopic
   INCLUDE RGBDSensorFromRosTopic.h
   EXTRA_CONFIG
     WRAPPER=RGBDSensorFromRosTopic
+  DEFAULT ON
 )
 
 if(NOT SKIP_RGBDSensorFromRosTopic)
