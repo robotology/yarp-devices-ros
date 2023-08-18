@@ -85,8 +85,8 @@ jobs:
         cd ${GITHUB_WORKSPACE}
         git clone https://github.com/robotology/yarp
         #the next git switch command will be removed after the branch is merged into master
-        #cd yarp
-        #git switch origin/yarp_no_ros --detach
+        cd yarp
+        git switch origin/yarp_no_ros --detach
 
     - name: Configure and build yarp [Linux&macOS]
       if: contains(matrix.os, 'macos') || contains(matrix.os, 'ubuntu')
@@ -100,6 +100,27 @@ jobs:
                       -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} .. \
                       -DYARP_COMPILE_TESTS:BOOL=ON \
                       -DYARP_COMPILE_ALL_FAKE_DEVICES:BOOL=ON
+        cmake --build . --config ${{ matrix.build_type }}
+        cmake --install . --config ${{ matrix.build_type }}
+        echo "YARP_DATA_DIRS=${CONDA_PREFIX}/share/yarp::${YARP_DATA_DIRS}" >> $GITHUB_ENV
+
+    - name: Download Yarp-ros [Linux&macOS]
+      if: contains(matrix.os, 'macos') || contains(matrix.os, 'ubuntu')
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        git clone https://github.com/robotology/yarp-ros
+
+    - name: Configure and build yarp-ros [Linux&macOS]
+      if: contains(matrix.os, 'macos') || contains(matrix.os, 'ubuntu')
+      shell: bash -l {0}
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        cd yarp-ros
+        mkdir build
+        cd build
+        cmake -GNinja -DCMAKE_INSTALL_PREFIX=${CONDA_PREFIX} \
+                      -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} .. \
+                      -DYARP_COMPILE_TESTS:BOOL=ON
         cmake --build . --config ${{ matrix.build_type }}
         cmake --install . --config ${{ matrix.build_type }}
         echo "YARP_DATA_DIRS=${CONDA_PREFIX}/share/yarp::${YARP_DATA_DIRS}" >> $GITHUB_ENV
