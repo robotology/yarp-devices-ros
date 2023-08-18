@@ -75,7 +75,7 @@ bool RGBDToPointCloudSensor_nws_ros::open(yarp::os::Searchable &config)
         yCError(RGBDTOPOINTCLOUDSENSORNWSROS) << "Unable to publish data on " << pointCloudTopicName.c_str() << " topic, check your yarp-ROS network configuration";
         return false;
     }
-
+    return true;
 }
 
 bool RGBDToPointCloudSensor_nws_ros::close()
