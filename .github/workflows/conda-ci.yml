@@ -39,6 +39,20 @@ jobs:
       run: |
         perl tests/misc/check_license.pl
         
+  check-tests:
+    name: 'Check Devices Tests'
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v3
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update -qq
+        sudo apt-get install -qq -y python3
+    - name: Check Devices Tests
+      run: |
+        python3 tests/misc/check_tests.py
+        
   build:
     name: '[${{ matrix.os }}@${{ matrix.build_type }}@conda]'
     runs-on: ${{ matrix.os }}

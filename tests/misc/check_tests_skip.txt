@@ -1,1 +1,14 @@
-./src/devices/ros2test
+./src/devices/laserFromRosTopic
+./src/devices/RGBDToPointCloudSensor_nws_ros
+./src/devices/RGBDSensorFromRosTopic
+./src/devices/ControlBoard_nws_ros
+./src/devices/Rangefinder2D_nws_ros
+./src/devices/frameTransformSet_nwc_ros
+./src/devices/FrameGrabber_nws_ros
+./src/devices/mobileBaseVelocityControl_nws_ros
+./src/devices/RGBDSensor_nws_ros
+./src/devices/odometry2D_nws_ros
+./src/devices/frameTransformGet_nwc_ros
+./src/devices/multipleAnalogSensorsRosPublishers
+./src/devices/localization2D_nws_ros
+./src/devices/RGBDRosConversionUtils
