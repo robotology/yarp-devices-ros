@@ -1,17 +1,14 @@
-# Copyright (C) 2006-2023 Istituto Italiano di Tecnologia (IIT)
-# All rights reserved.
-#
-# This software may be modified and distributed under the terms of the
-# BSD-3-Clause license. See the accompanying LICENSE file for details.
+# SPDX-FileCopyrightText: 2023 Istituto Italiano di Tecnologia (IIT)
+# SPDX-License-Identifier: BSD-3-Clause
 
 cmake_minimum_required(VERSION 3.16)
 project(yarp-devices-ros
         LANGUAGES CXX
-        VERSION 0.1.0)
+        VERSION 3.8.0)
 
 include(FeatureSummary)
 
-find_package(YCM 0.14 REQUIRED)
+find_package(YCM 0.15.1 REQUIRED)
 
 include(GNUInstallDirs)
 
@@ -33,8 +30,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set(YARP_FORCE_DYNAMIC_PLUGINS TRUE CACHE INTERNAL "yarp-devices-ros is always built with dynamic plugins")
 set(BUILD_SHARED_LIBS OFF CACHE INTERNAL "Build libraries as shared as opposed to static")
 
-find_package(YARP 3.7.2 COMPONENTS os sig dev rosmsg serversql OPTIONAL_COMPONENTS math REQUIRED)
-find_package(YARP 3.7.2 COMPONENTS catch2 dev_tests QUIET)
+find_package(YARP 3.8.0 COMPONENTS os sig dev rosmsg serversql OPTIONAL_COMPONENTS math REQUIRED)
+find_package(YARP 3.8.0 COMPONENTS catch2 dev_tests QUIET)
 
 if(YARP_catch2_FOUND AND YARP_dev_tests_FOUND)
   option(YARP_COMPILE_TESTS "Enable YARP tests" OFF)
