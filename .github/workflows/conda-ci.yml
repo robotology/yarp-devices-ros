@@ -84,9 +84,6 @@ jobs:
       run: |
         cd ${GITHUB_WORKSPACE}
         git clone https://github.com/robotology/yarp
-        #the next git switch command will be removed after the branch is merged into master
-        cd yarp
-        git switch origin/yarp_no_ros --detach
 
     - name: Configure and build yarp [Linux&macOS]
       if: contains(matrix.os, 'macos') || contains(matrix.os, 'ubuntu')
