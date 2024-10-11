@@ -97,7 +97,7 @@ void InputPortProcessor::onRead(yarp::rosmsg::sensor_msgs::LaserScan& b)
     m_port_mutex.unlock();
 }
 
-inline void InputPortProcessor::getLast(yarp::dev::LaserScan2D& data, Stamp& stmp)
+inline void InputPortProcessor::getLast(yarp::sig::LaserScan2D& data, Stamp& stmp)
 {
     //this blocks untils the first data is received;
     size_t counter =0;
@@ -336,7 +336,7 @@ bool LaserFromRosTopic::threadInit()
     return true;
 }
 
-void LaserFromRosTopic::calculate(yarp::dev::LaserScan2D scan_data, yarp::sig::Matrix m)
+void LaserFromRosTopic::calculate(yarp::sig::LaserScan2D scan_data, yarp::sig::Matrix m)
 {
     yarp::sig::Vector temp(3);
     temp = yarp::math::dcm2rpy(m);
