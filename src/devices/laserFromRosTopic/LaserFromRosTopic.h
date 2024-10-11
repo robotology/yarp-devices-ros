@@ -14,7 +14,6 @@
 #include <yarp/os/Stamp.h>
 #include <yarp/dev/ControlBoardInterfaces.h>
 #include <yarp/dev/IRangefinder2D.h>
-#include <yarp/dev/LaserScan2D.h>
 #include <yarp/dev/Lidar2DDeviceBase.h>
 #include <yarp/sig/Vector.h>
 #include <yarp/dev/IFrameTransform.h>
@@ -30,6 +29,27 @@
 #include <string>
 #include <vector>
 
+// Compatibility with both YARP 3.9 and 3.10
+// See https://github.com/robotology/yarp/pull/3130
+#if __has_include (<yarp/dev/LaserScan2D.h>)
+
+// YARP 3.9 case
+#include <yarp/dev/LaserScan2D.h>
+
+namespace yarp {
+namespace sig {
+typedef yarp::dev::LaserScan2D LaserScan2D;
+}
+}
+
+#else
+
+// YARP 3.10 case
+#include <yarp/sig/LaserScan2D.h>
+
+#endif
+
+
 typedef unsigned char byte;
 
 //---------------------------------------------------------------------------------------------------------------
@@ -44,7 +64,7 @@ class InputPortProcessor :
     public yarp::os::Subscriber<yarp::rosmsg::sensor_msgs::LaserScan>
 {
     std::mutex             m_port_mutex;
-    yarp::dev::LaserScan2D m_lastScan;
+    yarp::sig::LaserScan2D m_lastScan;
     yarp::os::Stamp        m_lastStamp;
     bool                   m_contains_data;
 
@@ -60,7 +80,7 @@ public:
     InputPortProcessor();
     using yarp::os::Subscriber<yarp::rosmsg::sensor_msgs::LaserScan>::onRead;
     virtual void onRead(yarp::rosmsg::sensor_msgs::LaserScan& v) override;
-    void getLast(yarp::dev::LaserScan2D& data, yarp::os::Stamp& stmp);
+    void getLast(yarp::sig::LaserScan2D& data, yarp::os::Stamp& stmp);
 };
 
 /**
@@ -78,7 +98,7 @@ protected:
     yarp::os::Node*                 m_ros_node = nullptr;
     std::vector<InputPortProcessor> m_input_ports;
     std::vector <yarp::os::Stamp>        m_last_stamp;
-    std::vector <yarp::dev::LaserScan2D> m_last_scan_data;
+    std::vector <yarp::sig::LaserScan2D> m_last_scan_data;
     yarp::dev::PolyDriver                m_tc_driver;
     yarp::dev::IFrameTransform*          m_iTc = nullptr;
 
@@ -87,7 +107,7 @@ protected:
     yarp::sig::Vector                    m_empty_laser_data;
     base_enum                            m_base_type;
 
-    void calculate(yarp::dev::LaserScan2D scan, yarp::sig::Matrix m);
+    void calculate(yarp::sig::LaserScan2D scan, yarp::sig::Matrix m);
 
 public:
     LaserFromRosTopic(double period = 0.01) : Lidar2DDeviceBase(), PeriodicThread(period)

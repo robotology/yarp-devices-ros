@@ -25,7 +25,6 @@
 
 #include <yarp/sig/Vector.h>
 
-#include <yarp/dev/LaserScan2D.h>
 #include <yarp/dev/IRangefinder2D.h>
 #include <yarp/dev/PolyDriver.h>
 #include <yarp/dev/DeviceDriver.h>
