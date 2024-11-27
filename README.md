@@ -8,7 +8,7 @@ This repository contains the following devices that used to be part of the main 
 * `controlBoard_nws_ros`
 * `frameGrabber_nws_ros`
 * `RGBDSensorFromRosTopic`
-* `rgbdSensor_nws_ros
+* `rgbdSensor_nws_ros`
 * `map2D_nws_ros`
 * `IMURosPublisher`
 * `WrenchStampedRosPublisher`
